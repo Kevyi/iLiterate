@@ -27,13 +27,13 @@ export default function Navbar() {
   }`;
 
   return (
-    <div className={`py-4 sticky top-0 z-50 bg-[#e7dccb] font-mono ${visibilityAnimation}`}>
+    <div className={`py-4 sticky top-0 z-50 bg-[#dcd2c2] font-mono ${visibilityAnimation}`}>
       <div className="transition-all duration-700 ease-in-out">
         <div className="p-5 flex h-14 items-center">
           {/* Logo */}
           <a href="/" className="mr-1 flex items-center gap-2 lg:mr-6">
-            <Image src={tempImage} alt="Temp" width={75} height={75} />
-            <p className="font-extrabold text-4xl">iLiterate</p>
+            <Image src={tempImage} alt="Temp" width={50} height={50} />
+            <p className="font-extrabold text-2xl text-[#1f1f1f]">iLiterate</p>
           </a>
 
           {/* Navigation Links */}
@@ -41,12 +41,12 @@ export default function Navbar() {
             {[
               { label: "Product", href: "product" },
               { label: "Kevin", href: "kevin" },
-              { label: "Log In", href: "login" },
-              { label: "Sign Up", href: "signup" },
+              { label: "iSpeak", href: "product" },
+              { label: "iListen", href: "product2" },
             ].map((nav, i) => (
               <a
                 key={i}
-                className="px-4 py-2 rounded-md transition-colors duration-300 hover:bg-blue-600 text-yellow-500 font-semibold"
+                className="px-4 py-2 rounded-md transition-colors duration-300 hover:text-[#3c5037] text-[#1f1f1f] font-semibold"
                 href={`/${nav.href}`}
               >
                 {nav.label}
