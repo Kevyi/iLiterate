@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Navbar from "@/components/navbar";
 import { useEffect, useState } from "react";
+import LoadingBook from "@/components/loadingbook";
 
 export default function AboutUs() {
   const [animate, setAnimate] = useState(false);
@@ -42,6 +43,7 @@ export default function AboutUs() {
             height={200}
             priority
           />
+
           <p className="ml-4 text-4xl font-extrabold text-black font-mono">
             iLiterate
           </p>
