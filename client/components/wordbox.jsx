@@ -98,7 +98,7 @@ export default function WordBox({ text, correctText, wordsInput, correctWord1, c
     }
   
     if(Number(currentIndex) >= correctWordIndex2){
-      words[correctWordIndex1] = correctWord2;
+      words[correctWordIndex2] = correctWord2;
     }
 
     
