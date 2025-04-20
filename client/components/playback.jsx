@@ -243,7 +243,7 @@ export default function AudioPlayer() {
                 <span className="font-bold text-black-500">{optionLabels[idx]}</span>
               </button>
               {/* Right column: sentence display */}
-              <div className="ml-4">
+              <div className="ml-4 font-mono">
                 <WordBox text={sentence} />
               </div>
             </div>
