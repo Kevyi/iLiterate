@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Navbar from "@/components/navbar";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/hover-card";
 
 function HoverCardDemo() {
@@ -19,10 +20,14 @@ function HoverCardDemo() {
     </HoverCard>
   );
 }
+
 export default function AboutUs() {
   return (
-    <div className="grid grid-rows-[auto_1fr_auto] items-center justify-items-center min-h-screen p-8 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-6 items-center sm:items-center max-w-2xl">
+    <div className="min-h-screen font-[family-name:var(--font-geist-sans)]">
+      <header className="w-full fixed top-0 z-50">
+        <Navbar />
+      </header>
+      <main className="pt-20 grid grid-rows-[auto_1fr_auto] items-center justify-items-center p-8 gap-16 sm:p-20 max-w-2xl mx-auto">
         <Image
           className="rounded-full mx-auto"
           src="/logo.png"
