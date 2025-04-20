@@ -11,9 +11,11 @@ import Recorder from "@/components/recorder.jsx"
 
 export default function testPage() {
   const [data, setData] = useState(null);
-  
   const [entry, setEntry] = useState("");
   const [loading, setLoading] = useState(true);
+
+  const [blankOptions1, setBlankOptions1] =  useState([]);
+  const [blankOptions2, setBlankOptions2] =  useState([]);
 
   useEffect(() => {
     const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -25,10 +27,13 @@ export default function testPage() {
         });
         console.log(response.data);
         setData(response.data);
+        setBlankOptions1(response.data.blank_options_1);
+        setBlankOptions2(response.data.blank_options_2);
       } catch (e) {
         console.error(e);
       } finally {
         setLoading(false);
+
       }
     };
   
@@ -63,10 +68,10 @@ export default function testPage() {
     <>
       <Navbar />
       
-      <div className = "flex flex-col items-center">
+      <div className = "flex flex-col items-center mt-20">
 
         <div className="flex justify-evenly items-center">
-            <div className="flex border border-gray-300 rounded-md p-4">
+            <div className="flex border rounded-md p-4">
             {loading ? (
                 <LoadingBook width={200} height={200}/>
             ) : (
@@ -75,7 +80,7 @@ export default function testPage() {
             </div>
         </div>
 
-        <form onSubmit={regenerateSentence} className = "flex w-fit gap-2">
+        <form onSubmit={regenerateSentence} className = "flex w-fit gap-2 mt-2">
             <Input
                 type="text"
                 value={entry}
@@ -85,6 +90,27 @@ export default function testPage() {
             <Button type="submit"  className = "border self-center">Submit</Button>
         </form>
     </div>
-    </>
+    <div className = "flex justify-center gap-4 m-3">
+        {/* <WordBox text={sentence} /> */}
+        {loading ? "" : <b className = "text-2xl flex items-center justify-center text-amber-400">Option 1: </b>}
+    
+        {blankOptions1.map((option, index) => (
+            <div key={`${index}${option}`}  className = "border-2">
+                <WordBox text={option} />
+            </div>   
+      ))}
+    </div>
+
+    <div className = "flex justify-center gap-4 m-3">
+        {/* <WordBox text={sentence} /> */}
+        {loading ? "" : <b className = "text-2xl flex items-center justify-center text-amber-400">Option 2: </b>}
+    
+        {blankOptions2.map((option, index) => (
+            <div key={`${index}${option}`}  className = "border-2">
+                <WordBox text={option} />
+            </div>   
+      ))}
+    </div>
+    </> 
   );
 }
