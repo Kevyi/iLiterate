@@ -89,11 +89,11 @@ function SpeechComponent({data}) {
     <>
 
 
-    <div className = "flex bg-gray-100">
+    <div className = "flex">
 
     
       <div className="p-6 max-w-xl mx-auto">
-        <h1 className="text-2xl font-bold mb-4 text-center">Speech Recognition</h1>
+        <h1 className="text-2xl text-[#3c5037] font-bold mb-4 text-center">Speech Recognition</h1>
 
         <div className="flex justify-center gap-4 mb-6">
           <button
@@ -106,7 +106,7 @@ function SpeechComponent({data}) {
           </button>
         </div>
 
-        <div className="bg-white border border-gray-300 rounded p-4 shadow-sm">
+        <div className="bg-[#f2e7d5] border border-gray-300 rounded p-4 shadow-sm">
           <p className="font-semibold text-gray-700 mb-2">Transcript:</p>
           <p className="text-gray-800 whitespace-pre-wrap">{transcript || 'Start speaking...'}</p>
         </div>

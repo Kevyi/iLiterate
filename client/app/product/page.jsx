@@ -52,6 +52,8 @@ export default function testPage() {
               });
               console.log(response.data)
               setData(response.data);
+              setBlankOptions1(response.data.blank_options_1);
+              setBlankOptions2(response.data.blank_options_2);
             } catch (e) {
               console.error(e);
             } finally {
@@ -70,6 +72,16 @@ export default function testPage() {
       
       <div className = "flex flex-col items-center mt-20">
 
+         <form onSubmit={regenerateSentence} className = "flex w-fit gap-2 mb-2">
+            <Input
+                type="text"
+                value={entry}
+                onChange={(e) => setEntry(e.target.value)}
+                placeholder="Enter your Topic.."
+            />
+            <Button type="submit"  className = "border self-center">Submit</Button>
+        </form>
+
         <div className="flex justify-evenly items-center">
             <div className="flex border rounded-md p-4">
             {loading ? (
@@ -79,20 +91,10 @@ export default function testPage() {
             )}
             </div>
         </div>
-
-        <form onSubmit={regenerateSentence} className = "flex w-fit gap-2 mt-2">
-            <Input
-                type="text"
-                value={entry}
-                onChange={(e) => setEntry(e.target.value)}
-                placeholder="Enter your Topic.."
-            />
-            <Button type="submit"  className = "border self-center">Submit</Button>
-        </form>
     </div>
     <div className = "flex justify-center gap-4 m-3">
         {/* <WordBox text={sentence} /> */}
-        {loading ? "" : <b className = "text-2xl flex items-center justify-center text-amber-400">Option 1: </b>}
+        {loading ? "" : <b className = "text-2xl flex items-center justify-center text-[#3c5037]">Option 1: </b>}
     
         {blankOptions1.map((option, index) => (
             <div key={`${index}${option}`}  className = "border-2">
@@ -103,7 +105,7 @@ export default function testPage() {
 
     <div className = "flex justify-center gap-4 m-3">
         {/* <WordBox text={sentence} /> */}
-        {loading ? "" : <b className = "text-2xl flex items-center justify-center text-amber-400">Option 2: </b>}
+        {loading ? "" : <b className = "text-2xl flex items-center justify-center text-[#3c5037]">Option 2: </b>}
     
         {blankOptions2.map((option, index) => (
             <div key={`${index}${option}`}  className = "border-2">

@@ -34,18 +34,17 @@ export default function Navbar({ scroll = false }) {
   return (
     <div className={`py-4 sticky top-0 z-50 bg-[#dcd2c2] font-mono ${visibilityAnimation}`}>
       <div className="transition-all duration-700 ease-in-out">
-        <div className="p-5 flex h-14 items-center">
+        <div className="p-5 flex h-14 items-center ">
           {/* Logo */}
-          <a href="/" className="mr-1 flex items-center gap-2 lg:mr-6">
+          <a href="/" className="flex items-center gap-2 lg:mr-6 ">
             <Image src={tempImage} alt="Temp" width={50} height={50} />
             <p className="font-extrabold text-2xl text-[#1f1f1f]">iLiterate</p>
           </a>
-
+          
           {/* Navigation Links */}
-          <nav className="flex flex-1 justify-evenly items-center text-xl">
+          <nav className="flex flex-1 text-xl">
             {[
-              { label: "Home", href: "" },
-              { label: "Kevin", href: "kevin" },
+              
               { label: "iSpeak", href: "product" },
               { label: "iListen", href: "product2" },
             ].map((nav, i) => (

@@ -90,6 +90,7 @@ function Word({ word, index, currentIndex, activeWordIndex, setActiveWordIndex, 
       console.error("TTS error:", err);
     }
   };
+  
 
   return (
     <Popover
@@ -128,8 +129,18 @@ export default function WordBox({ text, correctText, wordsInput, correctWord1, c
   const [currentWords, setCurrentWords] = useState([]);
   const correctWords = (correctText || "").split(" ");
   const [words, setWords] = useState(text.split(" "));
+  const [showOverlay, setShowOverlay] = useState(false);
+  const [overlayDone, setOverlayDone] = useState(false);
 
   const [, forceUpdate] = useReducer(x => x + 1, 0);
+
+  //Trigger win overlay.
+  const triggerOverlay = () => {
+    setShowOverlay(true);
+    setTimeout(() => {
+      setShowOverlay(false);
+    }, 500); // overlay lasts 500ms
+  };
 
   useEffect(() => {
     if (wordsInput) {
@@ -143,6 +154,14 @@ export default function WordBox({ text, correctText, wordsInput, correctWord1, c
         setIsWrong(true);
       }
     }
+
+    if(currentIndex === words.length && !overlayDone){
+      triggerOverlay();
+      setOverlayDone(true);
+      const audio = new Audio("/correct.mp3");
+      audio.play();
+    }
+
   }, [wordsInput]);
 
   useEffect(() => {
@@ -169,6 +188,11 @@ export default function WordBox({ text, correctText, wordsInput, correctWord1, c
 
   return (
     <>
+
+    {/* Overlay layer */}
+    {showOverlay && (
+        <div className="fixed top-0 left-0 w-full h-full bg-green-500 opacity-60 z-50 transition-opacity duration-500 pointer-events-none" />
+    )}
       <div style={{ lineHeight: "2em", fontSize: "18px", flexWrap: "wrap" }}>
         {words.map((word, index) => {
           const next = words[index + 1];
