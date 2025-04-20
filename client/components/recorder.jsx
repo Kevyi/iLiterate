@@ -1,78 +1,90 @@
 'use client';
 
-import React from 'react';
-import SpeechRecognition, {
-  useSpeechRecognition,
-} from 'react-speech-recognition';
+import React, { useEffect, useRef, useState } from 'react';
 
-export default function SpeechComponent() {
-  const {
-    transcript,
-    listening,
-    resetTranscript,
-    browserSupportsSpeechRecognition,
-  } = useSpeechRecognition();
+function SpeechComponent() {
+  const [transcript, setTranscript] = useState('');
+  const [listening, setListening] = useState(false);
+  const [countWord, setCountWord] = useState(0);
+  const recognitionRef = useRef(null);
 
-  // Check for browser support
-  if (!browserSupportsSpeechRecognition) {
-    return <p>Your browser does not support speech recognition.</p>;
+  useEffect(() => {
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      console.error('Speech Recognition not supported in this browser');
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = 'en-US';
+
+    recognition.onresult = (event) => {
+        
+            const result = event.results[event.results.length -1];
+            const transcript = result[0].transcript;
+            setTranscript(transcript)
+          
+    };
+
+    recognition.onerror = (event) => {
+      console.error('Speech recognition error:', event.error);
+    };
+
+    recognitionRef.current = recognition;
+  }, []);
+
+  const startListening = () => {
+    if (recognitionRef.current && !listening) {
+      recognitionRef.current.start();
+      setListening(true);
+    }
+  };
+
+  const stopListening = () => {
+    if (recognitionRef.current && listening) {
+      recognitionRef.current.stop();
+      setListening(false);
+    }
+  };
+
+  const newestTranscriptWords = transcript.trim().split(/\s+/);
+
+  for(const a of newestTranscriptWords){
+    console.log(a)
   }
 
-  const handleStart = () => {
-    SpeechRecognition.startListening({
-      continuous: true, // keep listening continuously 
-      language: 'en-US', // set the language
-      interimResults: true, // get interim results
-    });
-  };
-
-  const handleStop = () => {
-    SpeechRecognition.stopListening();
-  };
-
-
-
-  //Will continue to listen as long as all the words are met.
-
-
-
   return (
-    <>
     <div className="p-6 max-w-xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4 text-center">🎙️ Voice Input</h1>
+      <h1 className="text-2xl font-bold mb-4 text-center">🎙️ Speech Recognition</h1>
 
       <div className="flex justify-center gap-4 mb-6">
         <button
-          onClick={handleStart}
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          onClick={startListening}
+          disabled={listening}
+          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
         >
-          Start
+          Start Listening
         </button>
 
         <button
-          onClick={handleStop}
-          className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+          onClick={stopListening}
+          disabled={!listening}
+          className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50"
         >
-          Stop
-        </button>
-
-        <button
-          onClick={resetTranscript}
-          className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
-        >
-          Reset
+          Stop Listening
         </button>
       </div>
 
       <div className="bg-white border border-gray-300 rounded p-4 shadow-sm">
-        <p className="text-sm text-gray-600 mb-2">
-          Listening: <span className={listening ? 'text-green-600' : 'text-red-600'}>
-            {listening ? 'Yes' : 'No'}
-          </span>
-        </p>
-        <p className="text-gray-800 whitespace-pre-wrap font-mono">{transcript || 'Say something...'}</p>
+        <p className="font-semibold text-gray-700 mb-2">Transcript:</p>
+        <p className="text-gray-800 whitespace-pre-wrap">{transcript || 'Start speaking...'}</p>
       </div>
     </div>
-    </>
   );
 }
+
+export default SpeechComponent;
