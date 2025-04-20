@@ -196,27 +196,25 @@ export default function AudioPlayer() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-4 relative">
+    <div className="flex flex-col items-center justify-center p-4 relative bg-[#faf1e4]">
       <form onSubmit={handleSubmit} className="mb-4 flex flex-col sm:flex-row items-center">
         <div className="flex flex-row items-center space-x-2">
-          <label>
-            <b>Enter topic: </b>
-          </label>
           <input
+            placeholder="Enter topic..."
             type="text"
             value={entry}
             onChange={(e) => setEntry(e.target.value)}
-            className="border p-2"
+            className="border border-black border-solid p-2 rounded-md font-mono"
           />
         </div>
         <div className="flex mt-4 sm:mt-0 sm:ml-4 space-x-2">
-          <button type="submit" className="px-4 py-2 bg-green-500 text-white rounded">
+          <button type="submit" className="px-4 py-2 bg-[#dcd2c2] text-black rounded font-mono">
             Generate Sentences
           </button>
           <button
             type="button"
             onClick={handleRandomTopic}
-            className="px-4 py-2 bg-purple-500 text-white rounded"
+            className="px-4 py-2 bg-[#dcd2c2] text-black rounded font-mono"
           >
             Random Topic
           </button>
@@ -226,17 +224,14 @@ export default function AudioPlayer() {
       {/* Audio element for synthesized TTS */}
       <audio ref={audioRef} src={mp3Url || undefined} preload="auto" />
 
-      {/* Replay button for TTS audio */}
-      <button onClick={handleReplayAudio} className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-        Replay
-      </button>
+   
 
       {/* Render generated sentences in a two-column layout:
           Left: clickable square buttons for answer selection
           Right: non-clickable sentence display via WordBox */}
       <div className="mt-6 space-y-4 w-full max-w-10xl">
         {loading ? (
-          <p>Loading sentences...</p>
+          <p className="font-mono text-black">Loading sentences...</p>
         ) : sentences.length > 0 ? (
           sentences.map((sentence, idx) => (
             <div key={idx} className="flex items-center border rounded p-2">
@@ -254,9 +249,14 @@ export default function AudioPlayer() {
             </div>
           ))
         ) : (
-          <p>No sentences available.</p>
+          <p className="font-mono">No sentences available.</p>
         )}
       </div>
+
+      {/* Replay button for TTS audio */}
+      <button onClick={handleReplayAudio} className="mb-4 px-4 py-2 text-black rounded hover:bg-blue-600 font-mono bg-[#dcd2c2]">
+        Replay
+      </button>
 
       {/* Hidden audio element for correct.mp3 */}
       <audio ref={correctAudioRef} src="/correct.mp3" preload="auto" />

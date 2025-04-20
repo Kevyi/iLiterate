@@ -9,7 +9,7 @@ import string
 
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": ["http://localhost:3000", "http://172.23.27.233:3000"]}})
 
 load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
