@@ -116,12 +116,13 @@ def generate_definition(word):
         f"""You are an AI that always returns output in clean JSON format.
         When given a prompt, you must:
         1. Generate a definition of the given word. Try to keep the definition simple as the user is 
-        someone who is learning English.
+        someone who is learning English. 
+        2.ONLY RESPOND WITH THE JSON. DO NOT RESPOND WITH ANYTHING ELSE.
         Format like this:
         {{
         "word":"definition"
         }}
-        word: {word}
+        I am now going to give you the word I want you to find the definition for after this colon. It is: {word}
         """
     )
     raw = response.text.strip()
