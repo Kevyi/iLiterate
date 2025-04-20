@@ -45,8 +45,8 @@ export default function Navbar({ scroll = false }) {
           <nav className="flex flex-1 text-xl">
             {[
               
-              { label: "iSpeak", href: "product" },
-              { label: "iListen", href: "product2" },
+              { label: "iSpeak", href: "iSpeak" },
+              { label: "iListen", href: "iListen" },
             ].map((nav, i) => (
               <a
                 key={i}

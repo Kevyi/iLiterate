@@ -83,7 +83,7 @@ export default function testPage() {
         </form>
 
         <div className="flex justify-evenly items-center">
-            <div className="flex border rounded-md p-4">
+            <div className="flex">
             {loading ? (
                 <LoadingBook width={200} height={200}/>
             ) : (
