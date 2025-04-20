@@ -28,7 +28,7 @@ export default function testPage() {
       } catch (e) {
         console.error(e);
       } finally {
-        await sleep(5000);
+        await sleep(2000);
         setLoading(false);
       }
     };
