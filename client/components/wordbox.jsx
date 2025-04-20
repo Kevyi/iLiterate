@@ -17,9 +17,9 @@ function Word({ word, index, activeWordIndex, setActiveWordIndex }) {
       <PopoverTrigger asChild>
         <span
           onClick={() => setActiveWordIndex(index)}
-          style={{ cursor: "pointer", padding: "0 4px", userSelect: "none" }}
+          style={{ cursor: "pointer", padding: "0 2px", userSelect: "none", fontFamily: "sans-serif", fontSize: "30px" }}
         >
-          {word}
+          <b className = "transition-all duration-300 ease-in-out hover:text-sky-600 hover:text-4xl ">{word}</b>
         </span>
       </PopoverTrigger>
       <PopoverContent side="top" className="w-64">
