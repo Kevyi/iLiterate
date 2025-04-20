@@ -5,18 +5,56 @@ import { Button } from "../../components/button.jsx";
 import Navbar from "@/components/navbar.jsx";
 import { Skeleton } from "../../components/skeleton.jsx";
 import { useEffect, useState } from "react";
+import {Input} from "@/components/ui/input.jsx"
+import axios from 'axios';
 
 export default function testPage() {
-  const [text, setText] = useState("");
+  const [data, setData] = useState(null);
+  
+  const [entry, setEntry] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate API call
-    setTimeout(() => {
-      setText("Generated text goes here! Hello, 123");
-      setLoading(false);
-    }, 2000);
+    
+    const fetchData = async () => {
+        try {
+          const response = await axios.post('http://127.0.0.1:5000/api/generate-sentence', {
+            prompt: {entry}
+          });
+          console.log(response.data)
+          setData(response.data);
+        } catch (e) {
+          console.error(e);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchData();
   }, []);
+
+    const regenerateSentence = (event) => {
+        setLoading(true);
+        event.preventDefault();
+        console.log('Entry:', entry);
+
+        const fetchData = async () => {
+            try {
+              const response = await axios.post('http://127.0.0.1:5000/api/generate-sentence', {
+                prompt: {entry}
+              });
+              console.log(response.data)
+              setData(response.data);
+            } catch (e) {
+              console.error(e);
+            } finally {
+              setLoading(false);
+            }
+          };
+          fetchData();
+        
+    };
+
+  //if (loading) return <p>Loading...</p>;
 
   return (
     <>
@@ -27,10 +65,25 @@ export default function testPage() {
           {loading ? (
             <Skeleton className="h-16 w-[300px]" />
           ) : (
-            <WordBox text={text} />
+            <WordBox text={data.sentence_with_blanks} correctWords={null}/>
           )}
         </div>
       </div>
+
+      <form onSubmit={regenerateSentence}>
+         <label>
+           <b>Enter topic: </b>
+           <br></br>
+           <Input
+             type="text"
+             value={entry}
+             onChange={(e) => setEntry(e.target.value)}
+           />
+         </label>
+         
+         <Button type="submit"  className = "border">Submit</Button>
+       </form>
+       
     </>
   );
 }
