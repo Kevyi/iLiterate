@@ -1,12 +1,13 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import WordBox from "./wordbox.jsx";
 
-function SpeechComponent() {
+function SpeechComponent({data}) {
   const [transcript, setTranscript] = useState('');
   const [listening, setListening] = useState(false);
-  const [countWord, setCountWord] = useState(0);
   const recognitionRef = useRef(null);
+
 
   useEffect(() => {
     const SpeechRecognition =
@@ -51,13 +52,11 @@ function SpeechComponent() {
     }
   };
 
-  const newestTranscriptWords = transcript.trim().split(/\s+/);
+  
 
-  for(const a of newestTranscriptWords){
-    console.log(a)
-  }
 
   return (
+    <>
     <div className="p-6 max-w-xl mx-auto">
       <h1 className="text-2xl font-bold mb-4 text-center">🎙️ Speech Recognition</h1>
 
@@ -84,6 +83,8 @@ function SpeechComponent() {
         <p className="text-gray-800 whitespace-pre-wrap">{transcript || 'Start speaking...'}</p>
       </div>
     </div>
+    <WordBox text={data.sentence_with_blanks} correctText = {data.actual_sentence} wordsInput = {transcript ? transcript.trim().split(/\s+/) : null } correctWord1={data.correct_blank_1} correctWord2={data.correct_blank_2}/>
+    </>
   );
 }
 
