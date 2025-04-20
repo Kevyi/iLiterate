@@ -84,6 +84,32 @@ def get_definition():
         return jsonify(document)
 
 
+@app.route("/api/generate-multiple-sentences", methods=["POST"])
+def generate_multipn_sentences():
+    prompt= request.json.get("prompt")
+    response = model.generate_content(
+        f"""You are an AI that always returns output in clean JSON format.
+        When given a prompt, you must:
+        1. Generate four sentences that sound similar to each other, but vary slightly.
+        Format like this:
+        {{
+        "sentence_1":"...",
+        "sentence_2":"...",
+        "sentence_3":"...",
+        "sentence_4":"..."
+        }}
+        prompt: {prompt}
+        """
+    )
+    raw = response.text.strip()
+    print(f"RAW FROM GEMINI:\n{raw}\n") 
+    if raw.startswith("```json"):
+        raw = raw.lstrip("```json").rstrip("```").strip()
+    elif raw.startswith("```"):
+        raw = raw.lstrip("```").rstrip("```").strip()
+    response_dict = json.loads(raw)
+    return response_dict
+
 
 def generate_definition(word):
     response = model.generate_content(
