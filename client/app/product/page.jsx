@@ -3,7 +3,7 @@
 import WordBox from "../../components/wordbox.jsx";
 import { Button } from "../../components/button.jsx";
 import Navbar from "@/components/navbar.jsx";
-import { Skeleton } from "../../components/skeleton.jsx";
+import LoadingBook from "../../components/loadingbook.jsx";
 import { useEffect, useState } from "react";
 import {Input} from "@/components/ui/input.jsx"
 import axios from 'axios';
@@ -16,21 +16,24 @@ export default function testPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    
+    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+  
     const fetchData = async () => {
-        try {
-          const response = await axios.post('http://127.0.0.1:5000/api/generate-sentence', {
-            prompt: {entry}
-          });
-          console.log(response.data)
-          setData(response.data);
-        } catch (e) {
-          console.error(e);
-        } finally {
-          setLoading(false);
-        }
-      };
-      fetchData();
+      try {
+        const response = await axios.post('http://127.0.0.1:5000/api/generate-sentence', {
+          prompt: { entry }
+        });
+        console.log(response.data);
+        setData(response.data);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        await sleep(5000);
+        setLoading(false);
+      }
+    };
+  
+    fetchData();
   }, []);
 
     const regenerateSentence = (event) => {
@@ -64,7 +67,7 @@ export default function testPage() {
       <div className="flex justify-evenly items-center">
         <div className="flex border border-gray-300 rounded-md p-4">
           {loading ? (
-            <Skeleton className="h-16 w-[300px]" />
+            <LoadingBook width={200} height={200}/>
           ) : (
             <Recorder data = {data}></Recorder>
           )}

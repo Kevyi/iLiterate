@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Navbar from "@/components/navbar";
 import { useEffect, useState } from "react";
+import LoadingBook from "@/components/loadingbook";
 
 export default function AboutUs() {
   const [animate, setAnimate] = useState(false);
