@@ -40,12 +40,15 @@ def generate_sentence():
         2. Replace two key words with blanks.
         3. Give three options for each blank (one correct, two distractors). It should be clear to a user reading the sentece which option is the right answer 
         and which two options are incorrect. This could mean making the other two options not make grammatical sense.
+        4. Prove the correct word for each blank in the correct_blank keys.
         Format like this:
         {{
         "actual_sentence": "...",
         "sentence_with_blanks": "...",
         "blank_options_1": ["...", "...", "..."],
-        "blank_options_2": ["...", "...", "..."]
+        "correct_blank_1": "...",
+        "blank_options_2": ["...", "...", "..."],
+        "correct_blank_2":, "..."
         }}
 
         Prompt: {user_prompt}
