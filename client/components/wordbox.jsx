@@ -146,30 +146,26 @@ export default function WordBox({ text, correctText, wordsInput, correctWord1, c
   }, [wordsInput]);
 
   useEffect(() => {
-    let correctWordIndex1 = -1;
-    let correctWordIndex2 = -1;
+    const originalWords = text.split(" ");
+    let blankIndexes = [];
 
-    for (let i = 0; i < words.length; i++) {
-    if (words[i].includes("_")) {
-        if (correctWordIndex1 === -1) {
-        correctWordIndex1 = i;
-        } else if (correctWordIndex2 === -1) {
-        correctWordIndex2 = i;
-        }
-    }
-    }
+    originalWords.forEach((w, i) => {
+      if (w.includes("_")) blankIndexes.push(i);
+    });
+
+    console.log({ blankIndexes, correctWord1, correctWord2 });
 
     setWords((prev) => {
       const newWords = [...prev];
-      if (correctWordIndex1 !== -1 && currentIndex > correctWordIndex1) {
-        newWords[correctWordIndex1] = correctWord1;
+      if (blankIndexes[0] !== undefined && currentIndex > blankIndexes[0]) {
+        newWords[blankIndexes[0]] = correctWord1;
       }
-      if (correctWordIndex2 !== -1 && currentIndex > correctWordIndex2) {
-        newWords[correctWordIndex2] = correctWord2;
+      if (blankIndexes[1] !== undefined && currentIndex > blankIndexes[1]) {
+        newWords[blankIndexes[1]] = correctWord2;
       }
       return newWords;
     });
-  }, [currentIndex, correctWord1, correctWord2, words.length]);
+  }, [currentIndex, correctWord1, correctWord2, text]);
 
   return (
     <>
