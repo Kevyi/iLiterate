@@ -7,6 +7,7 @@ import LoadingBook from "../../components/loadingbook.jsx";
 import { useEffect, useState } from "react";
 import {Input} from "@/components/ui/input.jsx"
 import axios from 'axios';
+import Recorder from "@/components/recorder.jsx"
 
 export default function testPage() {
   const [data, setData] = useState(null);
@@ -68,7 +69,7 @@ export default function testPage() {
           {loading ? (
             <LoadingBook width={200} height={200}/>
           ) : (
-            <WordBox text={data.sentence_with_blanks} correctWords={null}/>
+            <Recorder data = {data}></Recorder>
           )}
         </div>
       </div>

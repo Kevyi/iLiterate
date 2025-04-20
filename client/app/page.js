@@ -43,8 +43,7 @@ export default function AboutUs() {
             height={200}
             priority
           />
-
-          <p className="ml-4 text-4xl font-extrabold text-black font-mono">
+          <p className="ml-4 text-5xl font-extrabold text-black font-mono">
             iLiterate
           </p>
         </div>
