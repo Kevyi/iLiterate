@@ -29,7 +29,7 @@ export default function Navbar() {
 
   return (
     <>
-      <div className={`${navBarAnimation} ${visibilityAnimation} sticky top-0 z-10 bg-slate-900 border-b border-b-blue-500/50 font-sans`}>
+      <div className={`${navBarAnimation} ${visibilityAnimation} sticky top-0 z-10 bg-[#e7dccb] font-mono`}>
         <div className={`${isShrunk ? "mr-auto ml-20" : ""} transition-all duration-700 ease-in-out`}>
           <div className="p-5 flex h-14 items-center">
             {/* Logo */}
