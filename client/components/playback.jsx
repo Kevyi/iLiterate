@@ -208,13 +208,13 @@ export default function AudioPlayer() {
           />
         </div>
         <div className="flex mt-4 sm:mt-0 sm:ml-4 space-x-2">
-          <button type="submit" className="px-4 py-2 bg-[#dcd2c2] text-black rounded font-mono">
+          <button type="submit" className="px-4 py-2 bg-[#dcd2c2] text-black rounded font-mono hover:bg-[#3c5037] cursor-pointer hover:text-white">
             Generate Sentences
           </button>
           <button
             type="button"
             onClick={handleRandomTopic}
-            className="px-4 py-2 bg-[#dcd2c2] text-black rounded font-mono"
+            className="px-4 py-2 bg-[#dcd2c2] text-black rounded font-mono cursor-pointer hover:bg-[#3c5037] hover:text-white"
           >
             Random Topic
           </button>
@@ -238,12 +238,12 @@ export default function AudioPlayer() {
               {/* Left column: clickable square button */}
               <button
                 onClick={() => handleSelect(idx)}
-                className="w-10 h-10 border border-blue-500 rounded-md flex items-center justify-center hover:bg-blue-50 focus:outline-none"
+                className="w-10 h-10 border border-black-1000 rounded-md flex items-center justify-center hover:bg-[#dcd2c2] focus:outline-none"
               >
-                <span className="font-bold text-blue-500">{optionLabels[idx]}</span>
+                <span className="font-bold text-black-500">{optionLabels[idx]}</span>
               </button>
               {/* Right column: sentence display */}
-              <div className="ml-4">
+              <div className="ml-4 font-mono">
                 <WordBox text={sentence} />
               </div>
             </div>
@@ -254,7 +254,7 @@ export default function AudioPlayer() {
       </div>
 
       {/* Replay button for TTS audio */}
-      <button onClick={handleReplayAudio} className="mb-4 px-4 py-2 text-black rounded hover:bg-blue-600 font-mono bg-[#dcd2c2]">
+      <button onClick={handleReplayAudio} className="mt-4 px-4 py-2 text-black rounded hover:bg-[#3c5037] font-mono bg-[#dcd2c2] cursor-pointer hover:text-white">
         Replay
       </button>
 
