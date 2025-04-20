@@ -4,10 +4,15 @@ import Image from "next/image";
 import tempImage from "@/public/logo.png";
 import { useEffect, useState } from "react";
 
-export default function Navbar() {
+export default function Navbar({ scroll = false }) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    if (!scroll) {
+      setIsVisible(true);
+      return;
+    }
+
     const target = document.getElementById("nextSection");
     if (!target) return;
 
@@ -20,7 +25,7 @@ export default function Navbar() {
 
     observer.observe(target);
     return () => observer.disconnect();
-  }, []);
+  }, [scroll]);
 
   const visibilityAnimation = `transition-transform transition-opacity duration-500 ease-in-out ${
     isVisible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"
@@ -39,7 +44,7 @@ export default function Navbar() {
           {/* Navigation Links */}
           <nav className="flex flex-1 justify-evenly items-center text-xl">
             {[
-              { label: "Product", href: "product" },
+              { label: "Home", href: "" },
               { label: "Kevin", href: "kevin" },
               { label: "iSpeak", href: "product" },
               { label: "iListen", href: "product2" },

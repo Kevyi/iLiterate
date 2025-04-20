@@ -24,7 +24,7 @@ export default function AboutUs() {
   return (
     <div className="min-h-screen font-[family-name:var(--font-geist-sans)] bg-[#faf1e4]">
       <header className="w-full fixed top-0 z-50">
-        <Navbar />
+        <Navbar scroll={true}/>
       </header>
 
       {/* Hero Section */}
