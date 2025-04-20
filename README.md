@@ -15,9 +15,14 @@
  7. Install from requirements.txt
     >Make sure your virtual environment is active<br/>
     >pip install -r requirements.txt
- 8. Set up .env files in client folder and server fold
- 9. Set up MongoDB Atlas
- 10. Run the backend server
+ 8. Set up .env files in client folder and server folder
+    server:
+    GEMINI_API_KEY=
+    MONGODB_PASSWORD=
+    client:
+    NEXT_PUBLIC_GOOGLE_TTS_API_KEY=
+ 10. Set up MongoDB Atlas
+ 11. Run the backend server
     >python main.py <br/>
     OR<br/>
     >python3 main.py<br/>
