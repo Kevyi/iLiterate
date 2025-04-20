@@ -134,8 +134,8 @@ export default function WordBox({ text, correctText, wordsInput, correctWord1, c
   useEffect(() => {
     if (wordsInput) {
       if (
-        correctWords[currentIndex]?.toLowerCase().replace(/[^\w']/g, "") ===
-        wordsInput[wordsInput.length - 1]?.toString().toLowerCase().replace(/[^\w']/g, "")
+        correctWords[currentIndex]?.toLowerCase().replace(/[^\w]/g, "") ===
+        wordsInput[wordsInput.length - 1]?.toString().toLowerCase().replace(/[^\w]/g, "")
       ) {
         setCurrentIndex(currentIndex + 1);
         setIsWrong(false);
