@@ -109,7 +109,7 @@ export default function WordBox({ text, correctText, wordsInput, correctWord1, c
 
   return (
     <>
-    <a>{currentIndex}</a>
+    
     <div style={{ lineHeight: "2em", fontSize: "18px", flexWrap: "wrap" }}>
       {words.map((word, index) => {
         const isLast = index === words.length - 1;
