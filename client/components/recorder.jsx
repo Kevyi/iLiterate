@@ -5,7 +5,6 @@ import WordBox from "./wordbox.jsx";
 
 function SpeechComponent({data}) {
   const [transcript, setTranscript] = useState('');
-  const [newestTranscriptWords, setNewestTranscriptWords] = useState([]);
   const [listening, setListening] = useState(false);
   const recognitionRef = useRef(null);
 
@@ -53,7 +52,7 @@ function SpeechComponent({data}) {
     }
   };
 
-  setNewestTranscriptWords(transcript.trim().split(/\s+/));
+  
 
 
   return (
@@ -84,7 +83,7 @@ function SpeechComponent({data}) {
         <p className="text-gray-800 whitespace-pre-wrap">{transcript || 'Start speaking...'}</p>
       </div>
     </div>
-    <WordBox text={data.sentence_with_blanks} correctText = {data.actualSentence} wordsInput = {newestTranscriptWords} correctWord1={null} correctWord2={null}/>
+    <WordBox text={data.sentence_with_blanks} correctText = {data.actual_sentence} wordsInput = {transcript ? transcript.trim().split(/\s+/) : null } correctWord1={data.correct_blank_1} correctWord2={data.correct_blank_2}/>
     </>
   );
 }
