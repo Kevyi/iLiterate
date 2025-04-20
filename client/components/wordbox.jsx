@@ -54,7 +54,7 @@ function Word({ word, index, currentIndex, activeWordIndex, setActiveWordIndex, 
   const [mp3Url, setMp3Url] = useState("");
   const audioRef = useRef(null);
 
-  // Fetch definition as before
+  // Fetch definition when the popover opens
   useEffect(() => {
     const fetchDefinition = async () => {
       setLoading(true);
@@ -62,6 +62,7 @@ function Word({ word, index, currentIndex, activeWordIndex, setActiveWordIndex, 
         const response = await axios.post("http://127.0.0.1:5000/api/get-definition", { word: normalizedWord });
         setDefinition(response.data.definition);
       } catch (error) {
+        console.error("Error getting definition:", error);
         setDefinition("Definition not available.");
       } finally {
         setLoading(false);
@@ -72,11 +73,23 @@ function Word({ word, index, currentIndex, activeWordIndex, setActiveWordIndex, 
     }
   }, [activeWordIndex, index, normalizedWord]);
 
-  // TTS: Generate and play audio when word is clicked
+  // TTS: Generate and play audio for the word plus definition when clicked
   const handleWordClick = async () => {
     setActiveWordIndex(index);
     try {
-      const base64Audio = await synthesizeSpeech(normalizedWord);
+      // Ensure we have a valid definition; if not, try fetching it.
+      let def = definition;
+      if (!def) {
+        try {
+          const response = await axios.post("http://127.0.0.1:5000/api/get-definition", { word: normalizedWord });
+          def = response.data.definition;
+          setDefinition(def);
+        } catch {
+          def = "Definition not available.";
+        }
+      }
+      const ttsText = `${normalizedWord}. Definition: ${def}`;
+      const base64Audio = await synthesizeSpeech(ttsText);
       const audioBlob = base64ToBlob(base64Audio, "audio/mpeg");
       const url = URL.createObjectURL(audioBlob);
       setMp3Url(url);
@@ -90,7 +103,6 @@ function Word({ word, index, currentIndex, activeWordIndex, setActiveWordIndex, 
       console.error("TTS error:", err);
     }
   };
-  
 
   return (
     <Popover
@@ -134,12 +146,12 @@ export default function WordBox({ text, correctText, wordsInput, correctWord1, c
 
   const [, forceUpdate] = useReducer(x => x + 1, 0);
 
-  //Trigger win overlay.
+  // Trigger win overlay if user has completed the activity
   const triggerOverlay = () => {
     setShowOverlay(true);
     setTimeout(() => {
       setShowOverlay(false);
-    }, 500); // overlay lasts 500ms
+    }, 500); // Overlay lasts 500ms
   };
 
   useEffect(() => {
@@ -154,26 +166,20 @@ export default function WordBox({ text, correctText, wordsInput, correctWord1, c
         setIsWrong(true);
       }
     }
-
-    if(currentIndex === words.length && !overlayDone){
+    if (currentIndex === words.length && !overlayDone) {
       triggerOverlay();
       setOverlayDone(true);
       const audio = new Audio("/correct.mp3");
       audio.play();
     }
-
   }, [wordsInput]);
 
   useEffect(() => {
     const originalWords = text.split(" ");
     let blankIndexes = [];
-
     originalWords.forEach((w, i) => {
       if (w.includes("_")) blankIndexes.push(i);
     });
-
-    console.log({ blankIndexes, correctWord1, correctWord2 });
-
     setWords((prev) => {
       const newWords = [...prev];
       if (blankIndexes[0] !== undefined && currentIndex > blankIndexes[0]) {
@@ -188,17 +194,15 @@ export default function WordBox({ text, correctText, wordsInput, correctWord1, c
 
   return (
     <>
-
-    {/* Overlay layer */}
-    {showOverlay && (
+      {/* Overlay layer */}
+      {showOverlay && (
         <div className="fixed top-0 left-0 w-full h-full bg-green-500 opacity-60 z-50 transition-opacity duration-500 pointer-events-none" />
-    )}
+      )}
       <div style={{ lineHeight: "2em", fontSize: "18px", flexWrap: "wrap" }}>
         {words.map((word, index) => {
           const next = words[index + 1];
           const needsSpace =
             !/\s/.test(word) && !/[^\w\s]/.test(word) && !/^\s/.test(next ?? "");
-
           return (
             <span key={index} style={{ display: "inline" }}>
               <Word
