@@ -101,7 +101,7 @@ function Word({ word, index, currentIndex, activeWordIndex, setActiveWordIndex, 
           onClick={handleWordClick}
           style={{ cursor: "pointer", padding: "0 2px", userSelect: "none", fontSize: "30px" }}
         >
-          <span className={`${correctWordBool ? "text-green-500" : ""} transition-all duration-300 ease-in-out hover:text-sky-600 hover:text-4xl`}>
+          <span className={`${correctWordBool ? "text-green-500" : ""} transition-all duration-300 ease-in-out hover:text-[#6a9e5e] hover:text-4xl`}>
             <a className={`${wrongWordBool ? "text-red-600" : ""}`}>{word}</a>
           </span>
           {/* Hidden audio element for TTS */}
@@ -134,8 +134,8 @@ export default function WordBox({ text, correctText, wordsInput, correctWord1, c
   useEffect(() => {
     if (wordsInput) {
       if (
-        correctWords[currentIndex]?.toLowerCase() ===
-        wordsInput[wordsInput.length - 1]?.toString().toLowerCase()
+        correctWords[currentIndex]?.toLowerCase().replace(/[^\w]/g, "") ===
+        wordsInput[wordsInput.length - 1]?.toString().toLowerCase().replace(/[^\w]/g, "")
       ) {
         setCurrentIndex(currentIndex + 1);
         setIsWrong(false);
@@ -146,30 +146,26 @@ export default function WordBox({ text, correctText, wordsInput, correctWord1, c
   }, [wordsInput]);
 
   useEffect(() => {
-    let correctWordIndex1 = -1;
-    let correctWordIndex2 = -1;
-    let found = false;
+    const originalWords = text.split(" ");
+    let blankIndexes = [];
 
-    for (let i = 0; i < words.length; i++) {
-      if (words[i].includes("_") && !found) {
-        correctWordIndex1 = i;
-        found = true;
-      } else if (words[i].includes("_") && found) {
-        correctWordIndex2 = i;
-      }
-    }
+    originalWords.forEach((w, i) => {
+      if (w.includes("_")) blankIndexes.push(i);
+    });
+
+    console.log({ blankIndexes, correctWord1, correctWord2 });
 
     setWords((prev) => {
       const newWords = [...prev];
-      if (correctWordIndex1 !== -1 && currentIndex > correctWordIndex1) {
-        newWords[correctWordIndex1] = correctWord1;
+      if (blankIndexes[0] !== undefined && currentIndex > blankIndexes[0]) {
+        newWords[blankIndexes[0]] = correctWord1;
       }
-      if (correctWordIndex2 !== -1 && currentIndex > correctWordIndex2) {
-        newWords[correctWordIndex2] = correctWord2;
+      if (blankIndexes[1] !== undefined && currentIndex > blankIndexes[1]) {
+        newWords[blankIndexes[1]] = correctWord2;
       }
       return newWords;
     });
-  }, [currentIndex, correctWord1, correctWord2, words.length]);
+  }, [currentIndex, correctWord1, correctWord2, text]);
 
   return (
     <>
