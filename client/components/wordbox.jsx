@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useReducer } from "react";
+import { useState, useEffect, useRef, useReducer } from "react";
 import axios from "axios";
 import {
   Popover,
@@ -8,13 +8,53 @@ import {
   PopoverContent,
 } from "../components/popover";
 
+// Helper function for Google TTS (from playback.jsx)
+async function synthesizeSpeech(text) {
+  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_TTS_API_KEY;
+  if (!apiKey) {
+    console.error("API key is missing. Please set NEXT_PUBLIC_GOOGLE_TTS_API_KEY in your .env.");
+    throw new Error("API key is missing");
+  }
+  const url = `https://texttospeech.googleapis.com/v1/text:synthesize?key=${apiKey}`;
+  const requestBody = {
+    input: { text },
+    voice: { languageCode: "en-US", name: "en-US-Wavenet-D", ssmlGender: "MALE" },
+    audioConfig: { audioEncoding: "MP3" },
+  };
+  const response = await fetch(url, {
+    method: "POST",
+    body: JSON.stringify(requestBody),
+    headers: { "Content-Type": "application/json" },
+  });
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error("TTS request failed:", errorText);
+    throw new Error("TTS request failed with status " + response.status);
+  }
+  const data = await response.json();
+  return data.audioContent; // base64-encoded MP3
+}
+
+function base64ToBlob(base64, mimeType) {
+  const byteCharacters = atob(base64);
+  const byteNumbers = new Array(byteCharacters.length);
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+  }
+  const byteArray = new Uint8Array(byteNumbers);
+  return new Blob([byteArray], { type: mimeType });
+}
+
 function Word({ word, index, currentIndex, activeWordIndex, setActiveWordIndex, isWrong }) {
   const normalizedWord = word.replace(/[^\w']/g, "");
   const wrongWordBool = isWrong && currentIndex === index;
   const correctWordBool = index <= currentIndex - 1;
   const [definition, setDefinition] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [mp3Url, setMp3Url] = useState("");
+  const audioRef = useRef(null);
 
+  // Fetch definition as before
   useEffect(() => {
     const fetchDefinition = async () => {
       setLoading(true);
@@ -27,11 +67,29 @@ function Word({ word, index, currentIndex, activeWordIndex, setActiveWordIndex, 
         setLoading(false);
       }
     };
-
     if (activeWordIndex === index) {
       fetchDefinition();
     }
   }, [activeWordIndex, index, normalizedWord]);
+
+  // TTS: Generate and play audio when word is clicked
+  const handleWordClick = async () => {
+    setActiveWordIndex(index);
+    try {
+      const base64Audio = await synthesizeSpeech(normalizedWord);
+      const audioBlob = base64ToBlob(base64Audio, "audio/mpeg");
+      const url = URL.createObjectURL(audioBlob);
+      setMp3Url(url);
+      setTimeout(() => {
+        if (audioRef.current) {
+          audioRef.current.currentTime = 0;
+          audioRef.current.play().catch((err) => console.error("Audio playback error:", err));
+        }
+      }, 100);
+    } catch (err) {
+      console.error("TTS error:", err);
+    }
+  };
 
   return (
     <Popover
@@ -40,12 +98,14 @@ function Word({ word, index, currentIndex, activeWordIndex, setActiveWordIndex, 
     >
       <PopoverTrigger asChild>
         <span
-          onClick={() => setActiveWordIndex(index)}
+          onClick={handleWordClick}
           style={{ cursor: "pointer", padding: "0 2px", userSelect: "none", fontSize: "30px" }}
         >
           <span className={`${correctWordBool ? "text-green-500" : ""} transition-all duration-300 ease-in-out hover:text-sky-600 hover:text-4xl`}>
             <a className={`${wrongWordBool ? "text-red-600" : ""}`}>{word}</a>
           </span>
+          {/* Hidden audio element for TTS */}
+          <audio ref={audioRef} src={mp3Url || undefined} preload="auto" />
         </span>
       </PopoverTrigger>
       <PopoverContent side="top" className="w-64">
