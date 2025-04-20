@@ -27,8 +27,8 @@ export default function Navbar({ scroll = false }) {
     return () => observer.disconnect();
   }, [scroll]);
 
-  const visibilityAnimation = `transition-transform transition-opacity duration-500 ease-in-out ${
-    isVisible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"
+  const visibilityAnimation = `transition-transform duration-500 ease-in-out ${
+    isVisible ? "translate-y-0" : "-translate-y-full"
   }`;
 
   return (
