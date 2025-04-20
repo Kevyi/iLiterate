@@ -41,7 +41,7 @@ export default function WordBox({ text, correctText, wordsInput, correctWord1, c
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentWords, setCurrentWords] = useState([]);
   //const words = text.split(" ");
-  const correctWords = correctText.split(" ");
+  const correctWords = (correctText || "").split(" ");
   const [words, setWords] = useState(text.split(" "));
 
   const [, forceUpdate] = useReducer(x => x + 1, 0);
