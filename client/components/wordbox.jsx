@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
 import {
   Popover,
   PopoverTrigger,
@@ -40,8 +40,12 @@ export default function WordBox({ text, correctText, wordsInput, correctWord1, c
   const [isWrong, setIsWrong] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentWords, setCurrentWords] = useState([]);
-  const words = text.split(" ");
+  //const words = text.split(" ");
   const correctWords = correctText.split(" ");
+  const [words, setWords] = useState(text.split(" "));
+
+  const [, forceUpdate] = useReducer(x => x + 1, 0);
+
 
 
   //currentIndex tracks current wor.
@@ -79,29 +83,26 @@ export default function WordBox({ text, correctText, wordsInput, correctWord1, c
     let correctWordIndex1 = -1;
     let correctWordIndex2 = -1;
     let found = false;
-    
-    for(let i = 0; i < correctWords.length; i++){
-      
-      if(words[i].includes("_") && found !== false){
+  
+    for (let i = 0; i < words.length; i++) {
+      if (words[i].includes("_") && !found) {
         correctWordIndex1 = i;
         found = true;
-      }
-      else if(words[i].includes("_")){
+      } else if (words[i].includes("_") && found) {
         correctWordIndex2 = i;
       }
     }
   
-    
-  
-    if(Number(currentIndex) >= correctWordIndex1){
-      words[correctWordIndex1] = correctWord1;
-    }
-  
-    if(Number(currentIndex) >= correctWordIndex2){
-      words[correctWordIndex2] = correctWord2;
-    }
-
-    
+    setWords((prev) => {
+      const newWords = [...prev];
+      if (correctWordIndex1 !== -1 && currentIndex > correctWordIndex1) {
+        newWords[correctWordIndex1] = correctWord1;
+      }
+      if (correctWordIndex2 !== -1 && currentIndex > correctWordIndex2) {
+        newWords[correctWordIndex2] = correctWord2;
+      }
+      return newWords;
+    });
   }, [currentIndex]);
   
   
