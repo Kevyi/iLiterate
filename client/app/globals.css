@@ -47,24 +47,24 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(0.98 0 0); /* very light gray */
-  --foreground: oklch(0.12 0 0); /* deep gray for text */
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.12 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.12 0 0);
-  --primary: oklch(0.72 0.22 260); /* soft blue */
-  --primary-foreground: oklch(0.98 0 0); /* white text */
-  --secondary: oklch(0.98 0.1 90); /* pale gold */
-  --secondary-foreground: oklch(0.2 0 0); /* dark readable */
-  --muted: oklch(0.95 0 0);
-  --muted-foreground: oklch(0.4 0 0);
-  --accent: oklch(0.9 0.15 90); /* gold accent */
-  --accent-foreground: oklch(0.2 0 0);
-  --destructive: oklch(0.6 0.24 27.325);
-  --border: oklch(0.92 0 0);
-  --input: oklch(0.92 0 0);
-  --ring: oklch(0.72 0.22 260); /* matching primary */
+  --background: #faf1e4; /* soft beige background */
+  --foreground: #1f1f1f; /* dark gray-black text */
+  --card: #ffffff;
+  --card-foreground: #1f1f1f;
+  --popover: #ffffff;
+  --popover-foreground: #1f1f1f;
+  --primary: #8f8477; /* muted warm gray (main text tone) */
+  --primary-foreground: #ffffff;
+  --secondary: #a89e91; /* arrow icon / accent tone */
+  --secondary-foreground: #1f1f1f;
+  --muted: #f2e9db;
+  --muted-foreground: #6b6055;
+  --accent: #a89e91;
+  --accent-foreground: #1f1f1f;
+  --destructive: #b00020;
+  --border: #e3dcd0;
+  --input: #e3dcd0;
+  --ring: #8f8477;
 }
 
 .dark {
