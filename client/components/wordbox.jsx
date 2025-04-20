@@ -17,9 +17,9 @@ function Word({ word, index, activeWordIndex, setActiveWordIndex }) {
       <PopoverTrigger asChild>
         <span
           onClick={() => setActiveWordIndex(index)}
-          style={{ cursor: "pointer", padding: "0 2px", userSelect: "none", fontFamily: "sans-serif", fontSize: "30px" }}
+          style={{ cursor: "pointer", padding: "0 2px", userSelect: "none", fontSize: "30px" }}
         >
-          <b className = "transition-all duration-300 ease-in-out hover:text-sky-600 hover:text-4xl ">{word}</b>
+          <a className = "transition-all duration-300 ease-in-out hover:text-sky-600 hover:text-4xl ">{word}</a>
         </span>
       </PopoverTrigger>
       <PopoverContent side="top" className="w-64">
@@ -29,7 +29,7 @@ function Word({ word, index, activeWordIndex, setActiveWordIndex }) {
   );
 }
 
-export default function WordBox({ text }) {
+export default function WordBox({ text, correctWords }) {
   const [activeWordIndex, setActiveWordIndex] = useState(null);
   const words = text.split(" ");
 
