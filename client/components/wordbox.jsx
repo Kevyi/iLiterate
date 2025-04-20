@@ -43,7 +43,7 @@ function Word({ word, index, currentIndex, activeWordIndex, setActiveWordIndex, 
           onClick={() => setActiveWordIndex(index)}
           style={{ cursor: "pointer", padding: "0 2px", userSelect: "none", fontSize: "30px" }}
         >
-          <span className={`${correctWordBool ? "text-green-500" : ""} transition-all duration-300 ease-in-out hover:text-sky-600 hover:text-4xl`}>
+          <span className={`${correctWordBool ? "text-green-500" : ""} transition-all duration-300 ease-in-out hover:text-[#6a9e5e] hover:text-4xl`}>
             <a className={`${wrongWordBool ? "text-red-600" : ""}`}>{word}</a>
           </span>
         </span>
@@ -74,8 +74,8 @@ export default function WordBox({ text, correctText, wordsInput, correctWord1, c
   useEffect(() => {
     if (wordsInput) {
       if (
-        correctWords[currentIndex]?.toLowerCase() ===
-        wordsInput[wordsInput.length - 1]?.toString().toLowerCase()
+        correctWords[currentIndex]?.toLowerCase().replace(/[^\w']/g, "") ===
+        wordsInput[wordsInput.length - 1]?.toString().toLowerCase().replace(/[^\w']/g, "")
       ) {
         setCurrentIndex(currentIndex + 1);
         setIsWrong(false);
@@ -88,15 +88,15 @@ export default function WordBox({ text, correctText, wordsInput, correctWord1, c
   useEffect(() => {
     let correctWordIndex1 = -1;
     let correctWordIndex2 = -1;
-    let found = false;
 
     for (let i = 0; i < words.length; i++) {
-      if (words[i].includes("_") && !found) {
+    if (words[i].includes("_")) {
+        if (correctWordIndex1 === -1) {
         correctWordIndex1 = i;
-        found = true;
-      } else if (words[i].includes("_") && found) {
+        } else if (correctWordIndex2 === -1) {
         correctWordIndex2 = i;
-      }
+        }
+    }
     }
 
     setWords((prev) => {
