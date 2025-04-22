@@ -1,7 +1,8 @@
 # Preview
 
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/SbwjgJuP2Ko/0.jpg)]([https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE](https://www.youtube.com/watch?v=SbwjgJuP2Ko))
+[![Youtube Video](https://img.youtube.com/vi/SbwjgJuP2Ko/0.jpg)](https://www.youtube.com/watch?v=SbwjgJuP2Ko)
+
 
 # Inspiration
 Be honest, when was the last time you read for fun? No, the book your English professor assigned you to read doesn't count. And no, the emails you read this morning don't count either. With powerful AI tools that can summarize whole books, people are reading less than ever, leading to poorer literacy skills. In fact, according to the NCES, 43 million Americans are considered to have low literacy skills. Poor literacy skills can make it harder to attain education and greatly increase the changes of unemployment, so we created iLiterate, a tool meant to improve your reading and listening skills.
