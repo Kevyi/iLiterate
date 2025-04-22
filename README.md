@@ -1,3 +1,8 @@
+# Preview
+
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/SbwjgJuP2Ko/0.jpg)]([https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE](https://www.youtube.com/watch?v=SbwjgJuP2Ko))
+
 # Inspiration
 Be honest, when was the last time you read for fun? No, the book your English professor assigned you to read doesn't count. And no, the emails you read this morning don't count either. With powerful AI tools that can summarize whole books, people are reading less than ever, leading to poorer literacy skills. In fact, according to the NCES, 43 million Americans are considered to have low literacy skills. Poor literacy skills can make it harder to attain education and greatly increase the changes of unemployment, so we created iLiterate, a tool meant to improve your reading and listening skills.
 
@@ -35,6 +40,8 @@ We learned how to use various technologies and APIs including Gemini API and Mon
 # What's next for iLiterate
 In order to support incremental learning, we want to implement difficulty options so that as a user gets better, they can choose a harder difficulty. Implemented user profiles so that users can view past sentences that they read would also help them with reviewing. Lastly, we implemented iSpeak and iListen, but why stop there? There are many other features that we can add to help users improve their reading, writing, and listening skills. This includes features like iWrite which could test users ability to write.
 
+
+https://devpost.com/software/iliterate?_gl=1*1e13i20*_gcl_au*NjQ0MDg4MjIwLjE3NDUxNzQ1Njg.*_ga*MTgzNTQwOTQ3NC4xNzQ1MTc0NTY4*_ga_0YHJK3Y10M*MTc0NTE3NDU2OC4xLjEuMTc0NTE3NTI2OC4wLjAuMA
 # Set Up Guide
 1. Open client folder
     >cd client <br/>
